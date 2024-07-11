@@ -32,7 +32,6 @@ const MembersTable = () => {
 
   return (
     <div>
-      <Link href ="http://localhost:3000/auth/google">Click to login</Link>
       <div className="w-[80%] mx-auto">
         <DataTable columns={columns} data={members.results} />
       </div>
