@@ -60,32 +60,38 @@ export default function VerticalTabs({editMode}: TabComponentProps) {
         flexGrow: 1,
         bgcolor: "background.paper",
         display: "flex",
-        height: 500,
-      }}>
-      <Tabs
-        orientation="vertical"
-        variant="standard"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider" }}>
-        <Tab label="Personal Information" {...a11yProps(0)} />
-        <Tab label="Family Information" {...a11yProps(1)} />
-        <Tab label="Career Information" {...a11yProps(2)} />
-        <Tab label="Previous Denomination" {...a11yProps(3)} />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <PersonalInformation editMode={editMode} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <FamilyInfo editMode={editMode} />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <CareerInfo />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <PrevDenomInfo />
-      </TabPanel>
+        minheight: 300,
+      }}
+    >
+      <div className="hidden md:block ">
+        <Tabs
+          orientation="vertical"
+          variant="standard"
+          value={value}
+          onChange={handleChange}
+          aria-label="Vertical tabs example"
+          sx={{ borderRight: 1, borderColor: "divider" }}
+        >
+          <Tab label="Personal" {...a11yProps(0)} />
+          <Tab label="Family" {...a11yProps(1)} />
+          <Tab label="Career" {...a11yProps(2)} />
+          <Tab label="Denomination" {...a11yProps(3)} />
+        </Tabs>
+      </div>
+      <div className="">
+        <TabPanel value={value} index={0}>
+          <PersonalInformation editMode={editMode} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <FamilyInfo editMode={editMode} />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <CareerInfo editMode={editMode} />
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <PrevDenomInfo editMode={editMode} />
+        </TabPanel>
+      </div>
     </Box>
   );
 }

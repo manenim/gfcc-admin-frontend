@@ -37,7 +37,7 @@ import * as z from "zod";
 import PersonalInfo from "./personal-info";
 import FamilyInfo from "./family-info";
 
-const PrevDenom = ({ delta, form }: any) => {
+const PrevDenom = ({ delta, form, submit }: any) => {
   return (
     <div>
       <FormField
@@ -401,9 +401,7 @@ const PrevDenom = ({ delta, form }: any) => {
         name="specialSkills"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>
-              List your special skills (The things you do well)
-            </FormLabel>
+            <FormLabel>List your special skills (The do well)</FormLabel>
             <FormControl>
               <Input {...field} placeholder="Special Skills" type="text" />
             </FormControl>
@@ -411,6 +409,13 @@ const PrevDenom = ({ delta, form }: any) => {
           </FormItem>
         )}
       />
+      <Button
+        type="submit"
+        onSubmit={() => submit()}
+        className="w-full  bg-red-300"
+      >
+        Submit
+      </Button>
     </div>
   );
 };

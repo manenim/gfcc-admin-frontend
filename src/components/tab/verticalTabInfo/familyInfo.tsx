@@ -125,7 +125,7 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
     return (
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="">
-          <div className="grid grid-cols-4 gap-x-8 gap-y-12">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 lg:gap-x-6 gap-y-12">
             <FormField
               control={form.control}
               name="maritalStatus"
@@ -223,9 +223,10 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
+                            "pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground"
-                          )}>
+                          )}
+                        >
                           {field.value ? (
                             format(field.value, "PPP")
                           ) : (
@@ -268,9 +269,10 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
+                            "pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground"
-                          )}>
+                          )}
+                        >
                           {field.value ? (
                             format(field.value, "PPP")
                           ) : (
@@ -391,7 +393,7 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-bold text-md">
-                    Position Held by Spouse
+                    Spouse Position
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -486,7 +488,7 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-bold text-md">
-                    Number of Grace Children
+                    Children in church
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -552,7 +554,7 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-bold text-md">
-                    Spouse Church Attendance
+                    Spouse Attend
                   </FormLabel>
                   <Select onValueChange={field.onChange}>
                     <FormControl>
@@ -594,7 +596,7 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-bold text-md">
-                    Engaged But Living Together?
+                    Living Together?
                   </FormLabel>
                   <Select onValueChange={field.onChange}>
                     <FormControl>
@@ -709,9 +711,10 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
+                            "pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground"
-                          )}>
+                          )}
+                        >
                           {field.value ? (
                             format(field.value, "PPP")
                           ) : (

@@ -103,7 +103,7 @@ const PersonalInformation = ({editMode}: PersonalInfoProps) => {
         return (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="">
-              <div className="grid grid-cols-4 gap-x-8 gap-y-12">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 lg:gap-x-6 gap-y-12">
                 <FormField
                   control={form.control}
                   name="gender"
@@ -145,9 +145,10 @@ const PersonalInformation = ({editMode}: PersonalInfoProps) => {
                             <Button
                               variant={"outline"}
                               className={cn(
-                                "w-[240px] pl-3 text-left font-normal",
+                                "pl-3 text-left font-normal",
                                 !field.value && "text-muted-foreground"
-                              )}>
+                              )}
+                            >
                               {field.value ? (
                                 format(field.value, "PPP")
                               ) : (
@@ -233,85 +234,84 @@ const PersonalInformation = ({editMode}: PersonalInfoProps) => {
                     </FormItem>
                   )}
                 />
-              
 
-              <FormField
-                control={form.control}
-                name="residentialAddress"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="block font-bold text-md">
-                      Residential Address
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Residential Address"
-                        type="text"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="residentialAddress"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="block font-bold text-md">
+                        Address
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Residential Address"
+                          type="text"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="landmark"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="block font-bold text-md">
-                      Landmark 
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Landmark" type="text" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="landmark"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="block font-bold text-md">
+                        Landmark
+                      </FormLabel>
+                      <FormControl>
+                        <Input {...field} placeholder="Landmark" type="text" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="nextOfKinName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="block font-bold text-md">
-                      Next of Kin Name
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Next of Kin Name"
-                        type="text"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="nextOfKinName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="block font-bold text-md">
+                        Next of Kin Name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Next of Kin Name"
+                          type="text"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="nextOfKinPhoneNumbers"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="block font-bold text-md">
-                      Phone Numbers
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Next of Kin Phone Numbers"
-                        type="text"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="nextOfKinPhoneNumbers"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="block font-bold text-md">
+                        Phone Numbers
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Next of Kin Phone Numbers"
+                          type="text"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              {/* <div className="grid col-span-2 grid-cols-3 gap-4 gap-x-10 gap-y-8"> */}
+                {/* <div className="grid col-span-2 grid-cols-3 gap-4 gap-x-10 gap-y-8"> */}
                 <FormField
                   control={form.control}
                   name="phoneNumbers"
@@ -330,9 +330,7 @@ const PersonalInformation = ({editMode}: PersonalInfoProps) => {
                       <FormMessage />
                     </FormItem>
                   )}
-                    />
-                    
-
+                />
 
                 <FormField
                   control={form.control}
@@ -352,10 +350,7 @@ const PersonalInformation = ({editMode}: PersonalInfoProps) => {
                       <FormMessage />
                     </FormItem>
                   )}
-                        />
-                        
-
-                        
+                />
               </div>
             </form>
           </Form>

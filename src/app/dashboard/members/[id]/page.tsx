@@ -18,8 +18,8 @@ const MemberDetails = (props: Props) => {
     <div>
       <div className="w-full h-[30vh] bg-member-details-header bg-no-repeat bg-cover bg-center"></div>
       <div>
-        <div className="w-[88%] mx-auto -mt-[4rem] flex justify-between items-end">
-          <div className="flex items-end">
+        <div className="w-[94%] mx-auto -mt-[4rem] md:flex justify-between items-end">
+          <div className="md:flex items-end">
             <Image
               // external url
               src="https://plus.unsplash.com/premium_photo-1670884442192-7b58d513cd55?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -29,21 +29,25 @@ const MemberDetails = (props: Props) => {
               className="h-[14rem] w-[14rem] rounded-full object-cover object-top"
             />
             <div className="ml-6 mb-6">
-              <h2 className="text-[2rem] font-bold">Henrietta Okonkwo</h2>
-              <p className="text-[1.3rem]">Executive Member</p>
+              <h2 className="text-[1.6rem] mt-4 md:mt-0 md:text-[2rem] font-bold">
+                Henrietta Okonkwo
+              </h2>
+              <p className="md:text-[1.3rem]">Executive Member</p>
             </div>
           </div>
-          <div className="edit-button">
-            <button onClick={() => setEditMode(!editMode)} className="border-2 text-[#0C63F4] font-bold px-12 py-4 rounded-xl border-[#0C63F4] mb-8">
+          <div className="edit-button ml-6 md:ml-0 mt-8 md:mt-0">
+            <button
+              onClick={() => setEditMode(!editMode)}
+              className="border-2 text-[#0C63F4] font-bold px-12 py-4 rounded-xl border-[#0C63F4] mb-8"
+            >
               {editMode ? "Edit Mode" : "Edit Profile"}
             </button>
           </div>
         </div>
 
-        <div className="w-[88%] mx-auto mt-14">
-          
-          <div>
-            <VerticalTabs editMode={ editMode } />
+        <div className="w-[94%] mx-auto mt-14 bg-yellow-500">
+          <div className="bg-red-800">
+            <VerticalTabs editMode={editMode} />
           </div>
         </div>
       </div>

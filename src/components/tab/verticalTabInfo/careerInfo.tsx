@@ -43,115 +43,152 @@ const CareerInfo = ({ editMode }: CareerProps) => {
     console.log({ values });
   };
 
-  editMode && (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="">
-        <div className="grid grid-cols-4 gap-x-8 gap-y-12">
-          <FormField
-            control={form.control}
-            name="highestAcademicQualification"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-bold text-md">
-                  Highest Academic Qualification
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder="Highest Academic Qualification"
-                    type="text"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="discipline"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-bold text-md">Discipline</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Discipline" type="text" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="occupation"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-bold text-md">Occupation</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Occupation" type="text" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="specifyOccupation"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-bold text-md">
-                  Specify Occupation/Business
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder="Specify Occupation/Business"
-                    type="text"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="positionHeld"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-bold text-md">
-                  Position Held/Rank
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder="Position Held/Rank"
-                    type="text"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="officeAddress"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-bold text-md">
-                  Office/Business Address
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder="Office/Business Address"
-                    type="text"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+  if (editMode) {
+    return (
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 lg:gap-x-6 gap-y-12">
+            <FormField
+              control={form.control}
+              name="highestAcademicQualification"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-md">
+                    Highest Qualification
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Highest Academic Qualification"
+                      type="text"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="discipline"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-md">
+                    Discipline
+                  </FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Discipline" type="text" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="occupation"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-md">
+                    Occupation
+                  </FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Occupation" type="text" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="specifyOccupation"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-md">
+                    Occupation
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Specify Occupation/Business"
+                      type="text"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="positionHeld"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-md">
+                    Position Held
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Position Held/Rank"
+                      type="text"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="officeAddress"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-md">
+                    Office Address
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Office/Business Address"
+                      type="text"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </form>
+      </Form>
+    );
+  }
+
+  return (
+    <div>
+      <div className="grid grid-cols-4 gap-x-8 gap-y-14">
+        <div className="">
+          <h4 className="font-bold text-md">Highest Academic Qualification</h4>
+          <p className="py-2 w-[13vw]">Bsc</p>
         </div>
-      </form>
-    </Form>
+        <div className="">
+          <h4 className="font-bold text-md">Discipline</h4>
+          <p className="py-2 w-[13vw]">Computer Science</p>
+        </div>
+        <div className="">
+          <h4 className="font-bold text-md">Occupation</h4>
+          <p className="py-2 w-[13vw]">Software Developer</p>
+        </div>
+        <div className="">
+          <h4 className="font-bold text-md">Specify Occupation/Business</h4>
+          <p className="py-2 w-[13vw]">Software Developer</p>
+        </div>
+        <div className="">
+          <h4 className="font-bold text-md">Position Held/Rank</h4>
+          <p className="py-2 w-[13vw]">Software Developer</p>
+        </div>
+        <div className="">
+          <h4 className="font-bold text-md">Office/Business Address</h4>
+          <p className="py-2 w-[13vw]">12 uruan street. nwanniba</p>
+        </div>
+      </div>
+    </div>
   );
 };
 export default CareerInfo;

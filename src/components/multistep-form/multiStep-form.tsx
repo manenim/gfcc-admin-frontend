@@ -356,6 +356,7 @@ const MultiForm = () => {
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log('clicked')
     console.log({ values });
   };
 
@@ -400,10 +401,8 @@ const MultiForm = () => {
             {currentStep === 0 && <PersonalInfo delta={delta} form={form} />}
             {currentStep === 1 && <FamilyInfo delta={delta} form={form} />}
             {currentStep === 2 && <Career delta={delta} form={form} />}
-            {currentStep === 3 && <PrevDenom delta={delta} form={form} />}
-            {/* <Button type="submit" className="w-full">
-              Submit
-            </Button> */}
+            {currentStep === 3 && <PrevDenom submit = {handleSubmit} delta={delta} form={form} />}
+           
           </form>
         </Form>
       </div>
