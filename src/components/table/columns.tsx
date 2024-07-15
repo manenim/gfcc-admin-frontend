@@ -20,57 +20,58 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 // You can use a Zod schema here if you want.
 export type Member = {
   id: string;
-  name: string;
   surname: string;
-  dateOfBirth: string;
-  picture: { medium: string };
+  othernames: string;
+  dob: string;
+  picture: string;
 };
 
 export const columns: ColumnDef<Member>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "surname",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const member = row.original;
-      const name = row.getValue("name") as { first: string };
-      const avatar = member.picture.medium as string;
-      const formatted = name.first;
-      return (
-        <div className="font-medium flex items-center">
-          <Avatar className="mr-4">
-            <AvatarImage src={avatar} />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          {formatted}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
           Surname
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const name = row.getValue("name") as { last: string };
-      const formatted = name.last;
-      return <div className="font-medium">{formatted}</div>;
+      const member = row.original;
+      const surname = row.getValue("surname") as string;
+      const avatar =
+        "https://plus.unsplash.com/premium_photo-1689977968861-9c91dbb16049?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+      return (
+        <div className="font-medium flex items-center">
+          <Avatar className="mr-4">
+            <AvatarImage src={avatar} />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <p>{surname}</p>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "othernames",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Othernames
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const othernames = row.getValue("othernames") as string;
+      return <div className="font-medium">{othernames}</div>;
     },
   },
   {
@@ -79,20 +80,20 @@ export const columns: ColumnDef<Member>[] = [
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
           Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-   
   },
   {
     accessorKey: "dob",
     header: "DOB",
     cell: ({ row }) => {
-        const date = row.getValue("dob") as any;
-        const dat = new Date(date.date);
+      const date = row.getValue("dob") as any;
+      const dat = new Date(date);
       const formatted = dat.toLocaleDateString();
       return <div className="font-medium">{formatted}</div>;
     },
@@ -113,13 +114,13 @@ export const columns: ColumnDef<Member>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-                    //   onClick={ }
-                  >
+            //   onClick={ }
+            >
               Copy Member ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             {/* <DropdownMenuItem>View customer</DropdownMenuItem> */}
-            <Link href="#">
+            <Link href={`/dashboard/members/${member.id}`}>
               <DropdownMenuItem>View Member details</DropdownMenuItem>
             </Link>
           </DropdownMenuContent>

@@ -9,9 +9,13 @@ import PersonalInformation from "./verticalTabInfo/personalInformation";
 import CareerInfo from "./verticalTabInfo/careerInfo";
 import PrevDenomInfo from "./verticalTabInfo/prevDenomInfo";
 import FamilyInfo from "./verticalTabInfo/familyInfo";
+import { Inputs } from "../multistep-form/multiStep-form";
 
 interface TabComponentProps {
   editMode: boolean;
+  member: Inputs;
+  id: string;
+  setEditMode: (value: boolean) => void;
 }
 
 
@@ -47,7 +51,11 @@ function a11yProps(index: number) {
   };
 }
 
-export default function VerticalTabs({editMode}: TabComponentProps) {
+export default function VerticalTabs({
+  editMode,
+  member,
+  id,
+  setEditMode}: TabComponentProps) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -80,16 +88,36 @@ export default function VerticalTabs({editMode}: TabComponentProps) {
       </div>
       <div className="">
         <TabPanel value={value} index={0}>
-          <PersonalInformation editMode={editMode} />
+          <PersonalInformation
+            id={id}
+            member={member}
+            setEditMode={setEditMode}
+            editMode={editMode}
+          />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <FamilyInfo editMode={editMode} />
+          <FamilyInfo
+            member={member}
+            id={id}
+            setEditMode={setEditMode}
+            editMode={editMode}
+          />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <CareerInfo editMode={editMode} />
+          <CareerInfo
+            member={member}
+            id={id}
+            setEditMode={setEditMode}
+            editMode={editMode}
+          />
         </TabPanel>
         <TabPanel value={value} index={3}>
-          <PrevDenomInfo editMode={editMode} />
+          <PrevDenomInfo
+            member={member}
+            id={id}
+            setEditMode={setEditMode}
+            editMode={editMode}
+          />
         </TabPanel>
       </div>
     </Box>

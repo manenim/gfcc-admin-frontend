@@ -108,13 +108,40 @@ const FamilyInfo = ({ delta, form }: any) => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Marriage Anniversary</FormLabel>
-            <FormControl>
-              <Input
-                {...field}
-                placeholder="Marriage Anniversary"
-                type="date"
-              />
-            </FormControl>
+            <Popover>
+              <PopoverTrigger asChild>
+                <FormControl className="min-w-full">
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[240px] pl-3 text-left font-normal",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(field.value, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="center">
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  captionLayout="dropdown-buttons"
+                  fromYear={1997}
+                  toYear={2024}
+                  disabled={(date: any) =>
+                    date > new Date() || date < new Date("1997-01-01")
+                  }
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
             <FormMessage />
           </FormItem>
         )}
@@ -125,9 +152,40 @@ const FamilyInfo = ({ delta, form }: any) => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Spouse Birthday</FormLabel>
-            <FormControl>
-              <Input {...field} placeholder="Spouse Birthday" type="date" />
-            </FormControl>
+            <Popover>
+              <PopoverTrigger asChild>
+                <FormControl className="min-w-full">
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[240px] pl-3 text-left font-normal",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(field.value, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="center">
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  captionLayout="dropdown-buttons"
+                  fromYear={1997}
+                  toYear={2024}
+                  disabled={(date: any) =>
+                    date > new Date() || date < new Date("1997-01-01")
+                  }
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
             <FormMessage />
           </FormItem>
         )}
@@ -210,7 +268,7 @@ const FamilyInfo = ({ delta, form }: any) => {
 
       <FormField
         control={form.control}
-        name="spouseOfficeAddress"
+        name="spousePositionHeld"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Position Held by Spouse</FormLabel>
@@ -232,7 +290,11 @@ const FamilyInfo = ({ delta, form }: any) => {
           <FormItem>
             <FormLabel>Spouse Office Address</FormLabel>
             <FormControl>
-              <Input {...field} placeholder="Spouse Office Address" type="text" />
+              <Input
+                {...field}
+                placeholder="Spouse Office Address"
+                type="text"
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -309,8 +371,8 @@ const FamilyInfo = ({ delta, form }: any) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="yes">Yes</SelectItem>
-                  <SelectItem value="no">No</SelectItem>
+                  <SelectItem value="Yes">Yes</SelectItem>
+                  <SelectItem value="No">No</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -476,9 +538,40 @@ const FamilyInfo = ({ delta, form }: any) => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Marriage Date</FormLabel>
-            <FormControl>
-              <Input {...field} placeholder="Marriage Date" type="date" />
-            </FormControl>
+            <Popover>
+              <PopoverTrigger asChild>
+                <FormControl className="min-w-full">
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[240px] pl-3 text-left font-normal",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(field.value, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="center">
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  captionLayout="dropdown-buttons"
+                  fromYear={1997}
+                  toYear={2024}
+                  disabled={(date: any) =>
+                    date > new Date() || date < new Date("1997-01-01")
+                  }
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
             <FormMessage />
           </FormItem>
         )}

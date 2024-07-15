@@ -17,14 +17,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} flex`}>
-        <Sidebar />
-        <main className="w-full">
-          <div className="w-full lg:w-[82%] lg:ml-auto">
-            <Header />
-            {children}
-          </div>
-        </main>
+      <body>
+        <div className={`${inter.className} flex`}>
+          <Sidebar />
+          <main className="w-full">
+            <div className="w-full lg:w-[82%] lg:ml-auto">
+              <Header />
+              {children}
+            </div>
+          </main>
+        </div>
       </body>
     </html>
   );

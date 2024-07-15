@@ -1,8 +1,10 @@
 "use client"
 
 import VerticalTabs from "@/components/tab/verticalTab";
+import { useGetMemberByIdQuery } from "@/services/membersApi";
 import Image from "next/image";
 import { useState } from "react";
+import { TailSpin } from "react-loader-spinner";
 
 type Props = {
   params: {
@@ -13,6 +15,40 @@ type Props = {
 const MemberDetails = (props: Props) => {
   const id = props.params.id;
   const [editMode, setEditMode] = useState(false)
+
+   const {
+     data: member,
+     error,
+     isLoading,
+   } = useGetMemberByIdQuery(
+     id
+   );
+
+   console.log(member)
+   
+
+    if (isLoading) {
+      return (
+        <div className="w-[80%] flex justify-center items-center h-[80vh]">
+          <TailSpin
+            visible={true}
+            height="50"
+            width="50"
+            color="#051632"
+            ariaLabel="oval-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        </div>
+      );
+    }
+
+    if (error) {
+      return (
+        <h1 className="text-red">An error occurred while fetching contacts.</h1>
+      );
+    }
+
 
   return (
     <div>
@@ -30,7 +66,7 @@ const MemberDetails = (props: Props) => {
             />
             <div className="ml-6 mb-6">
               <h2 className="text-[1.6rem] mt-4 md:mt-0 md:text-[2rem] font-bold">
-                Henrietta Okonkwo
+                {member.surname} {member.othernames}
               </h2>
               <p className="md:text-[1.3rem]">Executive Member</p>
             </div>
@@ -47,7 +83,7 @@ const MemberDetails = (props: Props) => {
 
         <div className="w-[94%] mx-auto mt-14 bg-yellow-500">
           <div className="bg-red-800">
-            <VerticalTabs editMode={editMode} />
+            <VerticalTabs setEditMode={setEditMode} member={member} editMode={editMode} id={id} />
           </div>
         </div>
       </div>

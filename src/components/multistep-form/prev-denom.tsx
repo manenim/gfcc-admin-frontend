@@ -57,35 +57,94 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           </FormItem>
         )}
       />
-      #### From ```jsx
       <FormField
         control={form.control}
         name="previousDenomination1From"
         render={({ field }) => (
           <FormItem>
             <FormLabel>From</FormLabel>
-            <FormControl>
-              <Input {...field} placeholder="From" type="date" />
-            </FormControl>
+            <Popover>
+              <PopoverTrigger asChild>
+                <FormControl className="min-w-full">
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[240px] pl-3 text-left font-normal",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(field.value, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="center">
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  captionLayout="dropdown-buttons"
+                  fromYear={1997}
+                  toYear={2024}
+                  disabled={(date: any) =>
+                    date > new Date() || date < new Date("1997-01-01")
+                  }
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
             <FormMessage />
           </FormItem>
         )}
       />
-      #### To ```jsx
       <FormField
         control={form.control}
         name="previousDenomination1To"
         render={({ field }) => (
           <FormItem>
             <FormLabel>To</FormLabel>
-            <FormControl>
-              <Input {...field} placeholder="To" type="date" />
-            </FormControl>
+            <Popover>
+              <PopoverTrigger asChild>
+                <FormControl className="min-w-full">
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[240px] pl-3 text-left font-normal",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(field.value, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="center">
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  captionLayout="dropdown-buttons"
+                  fromYear={1997}
+                  toYear={2024}
+                  disabled={(date: any) =>
+                    date > new Date() || date < new Date("1997-01-01")
+                  }
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
             <FormMessage />
           </FormItem>
         )}
       />
-      #### Position Held ```jsx
       <FormField
         control={form.control}
         name="previousDenomination1PositionHeld"
@@ -99,7 +158,6 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           </FormItem>
         )}
       />
-      #### Ministerial Office Held (If any) ```jsx
       <FormField
         control={form.control}
         name="previousDenomination1MinisterialOffice"
@@ -117,7 +175,6 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           </FormItem>
         )}
       />
-      #### Previous Denomination 2 ```jsx
       <FormField
         control={form.control}
         name="previousDenomination2"
@@ -135,35 +192,94 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           </FormItem>
         )}
       />
-      #### From ```jsx
       <FormField
         control={form.control}
         name="previousDenomination2From"
         render={({ field }) => (
           <FormItem>
             <FormLabel>From</FormLabel>
-            <FormControl>
-              <Input {...field} placeholder="From" type="date" />
-            </FormControl>
+            <Popover>
+              <PopoverTrigger asChild>
+                <FormControl className="min-w-full">
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[240px] pl-3 text-left font-normal",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(field.value, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="center">
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  captionLayout="dropdown-buttons"
+                  fromYear={1997}
+                  toYear={2024}
+                  disabled={(date: any) =>
+                    date > new Date() || date < new Date("1997-01-01")
+                  }
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
             <FormMessage />
           </FormItem>
         )}
       />
-      #### To ```jsx
       <FormField
         control={form.control}
         name="previousDenomination2To"
         render={({ field }) => (
           <FormItem>
             <FormLabel>To</FormLabel>
-            <FormControl>
-              <Input {...field} placeholder="To" type="date" />
-            </FormControl>
+            <Popover>
+              <PopoverTrigger asChild>
+                <FormControl className="min-w-full">
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[240px] pl-3 text-left font-normal",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(field.value, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="center">
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  captionLayout="dropdown-buttons"
+                  fromYear={1997}
+                  toYear={2024}
+                  disabled={(date: any) =>
+                    date > new Date() || date < new Date("1997-01-01")
+                  }
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
             <FormMessage />
           </FormItem>
         )}
       />
-      #### Position Held ```jsx
       <FormField
         control={form.control}
         name="previousDenomination2PositionHeld"
@@ -171,13 +287,16 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           <FormItem>
             <FormLabel>Position Held</FormLabel>
             <FormControl>
-              <Input {...field} placeholder="Position Held" type="text" />
+              <Input
+                {...field}
+                placeholder="Ministerial position Held (If any)"
+                type="text"
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-      #### Ministerial Office Held (If any) ```jsx
       <FormField
         control={form.control}
         name="previousDenomination2MinisterialOffice"
@@ -195,7 +314,6 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           </FormItem>
         )}
       />
-      #### Previous Denomination 3 ```jsx
       <FormField
         control={form.control}
         name="previousDenomination3"
@@ -213,35 +331,94 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           </FormItem>
         )}
       />
-      #### From ```jsx
       <FormField
         control={form.control}
         name="previousDenomination3From"
         render={({ field }) => (
           <FormItem>
             <FormLabel>From</FormLabel>
-            <FormControl>
-              <Input {...field} placeholder="From" type="date" />
-            </FormControl>
+            <Popover>
+              <PopoverTrigger asChild>
+                <FormControl className="min-w-full">
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[240px] pl-3 text-left font-normal",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(field.value, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="center">
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  captionLayout="dropdown-buttons"
+                  fromYear={1997}
+                  toYear={2024}
+                  disabled={(date: any) =>
+                    date > new Date() || date < new Date("1997-01-01")
+                  }
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
             <FormMessage />
           </FormItem>
         )}
       />
-      #### To ```jsx
       <FormField
         control={form.control}
         name="previousDenomination3To"
         render={({ field }) => (
           <FormItem>
             <FormLabel>To</FormLabel>
-            <FormControl>
-              <Input {...field} placeholder="To" type="date" />
-            </FormControl>
+            <Popover>
+              <PopoverTrigger asChild>
+                <FormControl className="min-w-full">
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[240px] pl-3 text-left font-normal",
+                      !field.value && "text-muted-foreground"
+                    )}
+                  >
+                    {field.value ? (
+                      format(field.value, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="center">
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  captionLayout="dropdown-buttons"
+                  fromYear={1997}
+                  toYear={2024}
+                  disabled={(date: any) =>
+                    date > new Date() || date < new Date("1997-01-01")
+                  }
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
             <FormMessage />
           </FormItem>
         )}
       />
-      #### Position Held ```jsx
       <FormField
         control={form.control}
         name="previousDenomination3PositionHeld"
@@ -255,7 +432,6 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           </FormItem>
         )}
       />
-      #### Ministerial Office Held (If any) ```jsx
       <FormField
         control={form.control}
         name="previousDenomination3MinisterialOffice"
@@ -288,7 +464,6 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           </FormItem>
         )}
       />
-      #### Have you been baptized in water? ```jsx
       <FormField
         control={form.control}
         name="baptizedInWater"
@@ -302,15 +477,14 @@ const PrevDenom = ({ delta, form, submit }: any) => {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="yes">Yes</SelectItem>
-                <SelectItem value="no">No</SelectItem>
+                <SelectItem value="Yes">Yes</SelectItem>
+                <SelectItem value="No">No</SelectItem>
               </SelectContent>
             </Select>
             <FormMessage />
           </FormItem>
         )}
       />
-      #### If yes, when/where? ```jsx
       <FormField
         control={form.control}
         name="baptizedInWaterWhenWhere"
@@ -324,7 +498,6 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           </FormItem>
         )}
       />
-      #### Have you been baptized in the Holy Spirit? ```jsx
       <FormField
         control={form.control}
         name="baptizedInHolySpirit"
@@ -338,8 +511,8 @@ const PrevDenom = ({ delta, form, submit }: any) => {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="yes">Yes</SelectItem>
-                <SelectItem value="no">No</SelectItem>
+                <SelectItem value="Yes">Yes</SelectItem>
+                <SelectItem value="No">No</SelectItem>
               </SelectContent>
             </Select>
             <FormMessage />
@@ -359,7 +532,6 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           </FormItem>
         )}
       />
-      #### What is your passion (What you love to do and are good at)? ```jsx
       <FormField
         control={form.control}
         name="passion"
@@ -375,7 +547,6 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           </FormItem>
         )}
       />
-      #### What kind of church family would you expect us to be? ```jsx
       <FormField
         control={form.control}
         name="expectedChurchFamily"
@@ -395,13 +566,12 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           </FormItem>
         )}
       />
-      #### List your special skills (The things you do well) ```jsx
       <FormField
         control={form.control}
         name="specialSkills"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>List your special skills (The do well)</FormLabel>
+            <FormLabel>List your special skills</FormLabel>
             <FormControl>
               <Input {...field} placeholder="Special Skills" type="text" />
             </FormControl>
@@ -409,13 +579,14 @@ const PrevDenom = ({ delta, form, submit }: any) => {
           </FormItem>
         )}
       />
-      <Button
-        type="submit"
-        onSubmit={() => submit()}
-        className="w-full  bg-red-300"
-      >
-        Submit
-      </Button>
+      <div className="w-full flex justify-end">
+        <Button
+          type="submit"
+          className="w-[8rem] btn btn-primary mt-4 "
+        >
+          Submit
+        </Button>
+      </div>
     </div>
   );
 };

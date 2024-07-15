@@ -10,10 +10,10 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"; 
+} from "@/components/ui/popover";
 
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -30,9 +30,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useRouter } from "next/navigation";
+import { useUpdateMemberMutation } from "@/services/membersApi";
 
 interface FamilyInfoProps {
   editMode: boolean;
+  member: any;
+  id: string;
+  setEditMode: (value: boolean) => void;
 }
 
 type Inputs = z.infer<typeof formSchema>;
@@ -60,14 +65,14 @@ const formSchema = z
     lengthOfMarriage: z.string(),
     numberOfChildren: z.string(),
     numberOfGraceChildren: z.string(),
-    isSingleParent: z.boolean(),
-    isSpouseInGrace: z.boolean(),
-    spouseChurchAttendance: z.boolean(),
+    isSingleParent: z.string(),
+    isSpouseInGrace: z.string(),
+    spouseChurchAttendance: z.string(),
     spouseDenomination: z.string(),
-    engagedButLivingTogether: z.boolean(),
-    marriedTraditionally: z.boolean(),
-    marriedInCourt: z.boolean(),
-    marriedInChurch: z.boolean(),
+    engagedButLivingTogether: z.string(),
+    marriedTraditionally: z.string(),
+    marriedInCourt: z.string(),
+    marriedInChurch: z.string(),
     churchName: z.string(),
     marriageDate: z.date(),
   })
@@ -80,45 +85,61 @@ const formSchema = z
       path: ["marriageAnniversary"],
     }
   );
-const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
+const FamilyInfo = ({ editMode, member, id, setEditMode }: FamilyInfoProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       // family information
-
-      maritalStatus: "",
-      spouseName: "",
-      maidenName: "",
-      spousePhoneNumber: "",
-      spouseEmail: "",
-      // marriageAnniversary: "",
-      // spouseBirthday: "",
-      spouseNationality: "",
-      spouseStateOfOrigin: "",
-      spouseLGA: "",
-      hometown: "",
-      spouseOccupation: "",
-      spousePositionHeld: "",
-      spouseOfficeAddress: "",
-      otherRelevantInfo: "",
-      lengthOfMarriage: "",
-      numberOfChildren: "",
-      numberOfGraceChildren: "",
-      isSingleParent: false,
-      isSpouseInGrace: false,
-      spouseChurchAttendance: false,
-      spouseDenomination: "",
-      engagedButLivingTogether: false,
-      marriedTraditionally: false,
-      marriedInCourt: false,
-      marriedInChurch: false,
-      churchName: "",
-      // marriageDate: "",
+      maritalStatus: member.maritalStatus,
+      spouseName: member.spouseName,
+      maidenName: member.maidenName,
+      spousePhoneNumber: member.spousePhoneNumber,
+      spouseEmail: member.spouseEmail,
+      marriageAnniversary: parseISO(member.marriageAnniversary),
+      spouseBirthday: parseISO(member.spouseBirthday),
+      spouseNationality: member.spouseNationality,
+      spouseStateOfOrigin: member.spouseStateOfOrigin,
+      spouseLGA: member.spouseLGA,
+      hometown: member.hometown,
+      spouseOccupation: member.spouseOccupation,
+      spousePositionHeld: member.spousePositionHeld,
+      spouseOfficeAddress: member.spouseOfficeAddress,
+      otherRelevantInfo: member.otherRelevantInfo,
+      lengthOfMarriage: member.lengthOfMarriage,
+      numberOfChildren: member.numberOfChildren,
+      numberOfGraceChildren: member.numberOfGraceChildren,
+      isSingleParent: member.isSingleParent,
+      isSpouseInGrace: member.isSpouseInGrace,
+      spouseChurchAttendance: member.spouseChurchAttendance,
+      spouseDenomination: member.spouseDenomination,
+      engagedButLivingTogether: member.engagedButLivingTogether,
+      marriedTraditionally: member.marriedTraditionally,
+      marriedInCourt: member.marriedInCourt,
+      marriedInChurch: member.marriedInChurch,
+      churchName: member.churchName,
+      marriageDate: parseISO(member.marriageDate),
     },
   });
 
+  const [updateMember, { isLoading, error }] = useUpdateMemberMutation();
+  const router = useRouter();
+
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log("clicked");
     console.log({ values });
+
+    try {
+      const res = await updateMember({
+        memberId: id,
+        updatedMember: values,
+      });
+      console.log(res);
+      // router.push("/contacts");
+    } catch (err) {
+      console.log(err);
+    }
+    setEditMode(!editMode);
+    router.push(`/dashboard/members`);
   };
 
   if (editMode) {
@@ -389,7 +410,7 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
 
             <FormField
               control={form.control}
-              name="spouseOfficeAddress"
+              name="spousePositionHeld"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-bold text-md">
@@ -510,7 +531,10 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
                   <FormLabel className="font-bold text-md">
                     Is Single Parent?
                   </FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select
+                    defaultValue={member.isSingleParent}
+                    onValueChange={field.onChange}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your gender" />
@@ -533,7 +557,10 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
                   <FormLabel className="font-bold text-md">
                     Is Spouse in Grace?
                   </FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select
+                    defaultValue={member.isSpouseInGrace}
+                    onValueChange={field.onChange}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your gender" />
@@ -556,7 +583,10 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
                   <FormLabel className="font-bold text-md">
                     Spouse Attend
                   </FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select
+                    defaultValue={member.spouseChurchAttendance}
+                    onValueChange={field.onChange}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your gender" />
@@ -598,7 +628,10 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
                   <FormLabel className="font-bold text-md">
                     Living Together?
                   </FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select
+                    defaultValue={member.engagedButLivingTogether}
+                    onValueChange={field.onChange}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your gender" />
@@ -621,7 +654,10 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
                   <FormLabel className="font-bold text-md">
                     Married Traditionally?
                   </FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select
+                    defaultValue={member.marriedTraditionally}
+                    onValueChange={field.onChange}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your gender" />
@@ -644,7 +680,10 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
                   <FormLabel className="font-bold text-md">
                     Married In Court?
                   </FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select
+                    defaultValue={member.marriedInCourt}
+                    onValueChange={field.onChange}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your gender" />
@@ -667,7 +706,10 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
                   <FormLabel className="font-bold text-md">
                     Married In Church?
                   </FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select
+                    defaultValue={member.marriedInChurch}
+                    onValueChange={field.onChange}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your gender" />
@@ -744,6 +786,10 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
               )}
             />
           </div>
+
+          <Button type="submit" className="mt-4">
+            Submit
+          </Button>
         </form>
       </Form>
     );
@@ -754,95 +800,103 @@ const FamilyInfo = ({ editMode }: FamilyInfoProps) => {
       <div className="grid grid-cols-4 gap-x-8 gap-y-14">
         <div className="">
           <h4 className="font-bold text-md">Marital Status</h4>
-          <p className="py-2 w-[13vw]">Married</p>
+          <p className="py-2 w-[13vw]">{member.maritalStatus}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Spouse Name</h4>
-          <p className="py-2 w-[13vw]">John Doe</p>
+          <p className="py-2 w-[13vw]">{member.spouseName}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Maiden Name</h4>
-          <p className="py-2 w-[13vw]">Jane Doe</p>
+          <p className="py-2 w-[13vw]">{member.maidenName}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Spouse Phone Number</h4>
-          <p className="py-2 w-[13vw]">+1234567890</p>
+          <p className="py-2 w-[13vw]">{member.spousePhoneNumber}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Spouse Email</h4>
-          <p className="py-2 w-[13vw]">johndoe@example.com</p>
+          <p className="py-2 w-[13vw]">{member.spouseEmail}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Marriage Anniversary</h4>
-          <p className="py-2 w-[13vw]">2022-01-01</p>
+          <p className="py-2 w-[13vw]">
+            {format(member.marriageAnniversary, "PP")}
+          </p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Spouse Birthday</h4>
-          <p className="py-2 w-[13vw]">2022-01-01</p>
+          <p className="py-2 w-[13vw]">{format(member.spouseBirthday, "PP")}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Spouse Nationality</h4>
-          <p className="py-2 w-[13vw]">British</p>
+          <p className="py-2 w-[13vw]">{member.spouseNationality}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Spouse State of Origin</h4>
-          <p className="py-2 w-[13vw]">Lagos</p>
+          <p className="py-2 w-[13vw]">{member.spouseStateOfOrigin}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Spouse LGA</h4>
-          <p className="py-2 w-[13vw]">Agege</p>
+          <p className="py-2 w-[13vw]">{member.spouseLGA}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Hometown</h4>
-          <p className="py-2 w-[13vw]">London</p>
+          <p className="py-2 w-[13vw]">{member.hometown}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Spouse Occupation</h4>
-          <p className="py-2 w-[13vw]">Engineer</p>
+          <p className="py-2 w-[13vw]">{member.spouseOccupation}</p>
         </div>
-        <div className="">
+        {/* <div className="">
           <h4 className="font-bold text-md">Specify Occupation</h4>
-          <p className="py-2 w-[13vw]">Teacher</p>
-        </div>
+          <p className="py-2 w-[13vw]">{member.occ}</p>
+        </div> */}
         <div className="">
           <h4 className="font-bold text-md">Spouse Position Held</h4>
-          <p className="py-2 w-[13vw]">Manager</p>
+          <p className="py-2 w-[13vw]">{member.spousePositionHeld}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Spouse Office Address</h4>
-          <p className="py-2 w-[13vw]">123 Main St, London</p>
+          <p className="py-2 w-[13vw]">{member.spouseOfficeAddress}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Other Relevant Info</h4>
-          <p className="py-2 w-[13vw]">-</p>
+          <p className="py-2 w-[13vw]">{member.otherRelevantInfo}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Length of Marriage</h4>
-          <p className="py-2 w-[13vw]">10 years</p>
+          <p className="py-2 w-[13vw]">{member.lengthOfMarriage}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Number of Children</h4>
-          <p className="py-2 w-[13vw]">2</p>
+          <p className="py-2 w-[13vw]">{member.numberOfChildren}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Number of Grace Children</h4>
-          <p className="py-2 w-[13vw]">0</p>
+          <p className="py-2 w-[13vw]">{member.numberOfGraceChildren}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Is Single Parent</h4>
-          <p className="py-2 w-[13vw]">No</p>
+          <p className="py-2 w-[13vw]">
+            {member.isSingleParent ? "Yes" : "No"}
+          </p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Is Spouse in Grace</h4>
-          <p className="py-2 w-[13vw]">No</p>
+          <p className="py-2 w-[13vw]">
+            {member.isSpouseInGrace ? "Yes" : "No"}
+          </p>
         </div>
         <div className="">
-          <h4 className="font-bold text-md"> Spouse church attendance</h4>
-          <p className="py-2 w-[13vw]">yes</p>
+          <h4 className="font-bold text-md">Spouse church attendance</h4>
+          <p className="py-2 w-[13vw]">
+            {member.spouseChurchAttendance ? "Yes" : "No"}
+          </p>
         </div>
         <div className="">
-          <h4 className="font-bold text-md"> Spouse Denomination</h4>
-          <p className="py-2 w-[13vw]">Grace Family</p>
+          <h4 className="font-bold text-md">Spouse Denomination</h4>
+          <p className="py-2 w-[13vw]">{member.spouseDenomination}</p>
         </div>
       </div>
     </div>

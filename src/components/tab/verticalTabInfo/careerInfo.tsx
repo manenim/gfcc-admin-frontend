@@ -10,9 +10,15 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { useUpdateMemberMutation } from "@/services/membersApi";
+import { useRouter } from "next/router";
 
 interface CareerProps {
   editMode: boolean;
+  member: Inputs;
+  id: string;
+  setEditMode: (value: boolean) => void;
 }
 
 type Inputs = z.infer<typeof formSchema>;
@@ -26,21 +32,38 @@ const formSchema = z.object({
   officeAddress: z.string(),
 });
 
-const CareerInfo = ({ editMode }: CareerProps) => {
+const CareerInfo = ({ editMode, member, id, setEditMode }: CareerProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      highestAcademicQualification: "",
-      discipline: "",
-      occupation: "",
-      specifyOccupation: "",
-      positionHeld: "",
-      officeAddress: "",
+      highestAcademicQualification: member.highestAcademicQualification,
+      discipline: member.discipline,
+      occupation: member.occupation,
+      specifyOccupation: member.specifyOccupation,
+      positionHeld: member.positionHeld,
+      officeAddress: member.officeAddress,
     },
   });
 
+  const [updateMember, { isLoading, error }] = useUpdateMemberMutation();
+  const router = useRouter();
+
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log("clicked");
     console.log({ values });
+
+    try {
+      const res = await updateMember({
+        memberId: id,
+        updatedMember: values,
+      });
+      console.log(res);
+      // router.push("/contacts");
+    } catch (err) {
+      console.log(err);
+    }
+    setEditMode(!editMode);
+    router.push(`/dashboard/members`);
   };
 
   if (editMode) {
@@ -155,6 +178,8 @@ const CareerInfo = ({ editMode }: CareerProps) => {
               )}
             />
           </div>
+
+          <Button type="submit">Save</Button>
         </form>
       </Form>
     );
@@ -165,27 +190,27 @@ const CareerInfo = ({ editMode }: CareerProps) => {
       <div className="grid grid-cols-4 gap-x-8 gap-y-14">
         <div className="">
           <h4 className="font-bold text-md">Highest Academic Qualification</h4>
-          <p className="py-2 w-[13vw]">Bsc</p>
+          <p className="py-2 w-[13vw]">{member.highestAcademicQualification}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Discipline</h4>
-          <p className="py-2 w-[13vw]">Computer Science</p>
+          <p className="py-2 w-[13vw]">{member.discipline}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Occupation</h4>
-          <p className="py-2 w-[13vw]">Software Developer</p>
+          <p className="py-2 w-[13vw]">{member.occupation}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Specify Occupation/Business</h4>
-          <p className="py-2 w-[13vw]">Software Developer</p>
+          <p className="py-2 w-[13vw]">{member.specifyOccupation}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Position Held/Rank</h4>
-          <p className="py-2 w-[13vw]">Software Developer</p>
+          <p className="py-2 w-[13vw]">{member.positionHeld}</p>
         </div>
         <div className="">
           <h4 className="font-bold text-md">Office/Business Address</h4>
-          <p className="py-2 w-[13vw]">12 uruan street. nwanniba</p>
+          <p className="py-2 w-[13vw]">{member.officeAddress}</p>
         </div>
       </div>
     </div>

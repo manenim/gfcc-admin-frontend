@@ -40,6 +40,25 @@ const PersonalInfo = ({ delta, form }: any) => {
         Provide your personal details.
       </p>
       <div className=" grid grid-cols-2 gap-x-10 gap-y-8">
+
+        {/* <FormField
+          control={form.control}
+          name="profilepic"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel className="block text-md leading-6">
+                  Picture
+                </FormLabel>
+                <FormControl>
+                    <Input id="picture" type="file" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        /> */}
+
         <FormField
           control={form.control}
           name="surname"

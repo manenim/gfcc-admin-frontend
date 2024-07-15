@@ -1,15 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Backend_URL } from "../lib/constants";
 
+
 export const membersApi = createApi({
   reducerPath: "membersApi",
-  baseQuery: fetchBaseQuery({ baseUrl: `${Backend_URL}` }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${Backend_URL}/member-profile` }),
   tagTypes: ["Members"],
 
   endpoints: (builder) => ({
     getAllMembers: builder.query({
       query: (token?: string) => ({
-        url: "/?results=50",
+        url: "/",
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -20,7 +21,7 @@ export const membersApi = createApi({
 
     addMember: builder.mutation({
       query: ({ newMember }) => ({
-        url: "/members",
+        url: "/",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,7 +33,7 @@ export const membersApi = createApi({
     // PATCH endpoint to update an existing contact
     updateMember: builder.mutation({
       query: ({ memberId, updatedMember }) => ({
-        url: `/contacts/${memberId}`,
+        url: `/${memberId}`,
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +56,7 @@ export const membersApi = createApi({
 
     getMemberById: builder.query({
       query: (memberId) => ({
-        url: `/members/${memberId}`,
+        url: `/${memberId}`,
         method: "GET",
         headers: {
           "Content-Type": "application/json",

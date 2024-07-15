@@ -11,6 +11,8 @@ import Link from "next/link";
 const MembersTable = () => {
   const { data: members, error, isLoading } = useGetAllMembersQuery("data");
 
+  console.log(members, "data")
+
 
   if (!members) {
     return (
@@ -33,7 +35,7 @@ const MembersTable = () => {
   return (
     <div>
       <div className="w-[80%] mx-auto">
-        <DataTable columns={columns} data={members.results} />
+        <DataTable columns={columns} data={members} />
       </div>
     </div>
   );

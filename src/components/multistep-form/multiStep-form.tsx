@@ -38,11 +38,20 @@ import PersonalInfo from "./personal-info";
 import FamilyInfo from "./family-info";
 import Career from "./career";
 import PrevDenom from "./prev-denom";
+import { useAddMemberMutation } from "@/services/membersApi";
+import { useRouter } from "next/navigation";
 
-type Inputs = z.infer<typeof formSchema>;
+export type Inputs = z.infer<typeof formSchema>;
 
 const formSchema = z
   .object({
+    // profilepic: z.object({
+  //   image: z
+  //     //Rest of validations done via react dropzone
+  //     .instanceof(File)
+  //     .refine((file) => file.size !== 0, "Please upload an image"),
+  // }),
+// 
     surname: z.string().min(3),
     othernames: z.string().min(1),
     gender: z.enum(["Male", "Female"]),
@@ -81,14 +90,14 @@ const formSchema = z
     lengthOfMarriage: z.string(),
     numberOfChildren: z.string(),
     numberOfGraceChildren: z.string(),
-    isSingleParent: z.boolean(),
-    isSpouseInGrace: z.boolean(),
-    spouseChurchAttendance: z.boolean(),
+    isSingleParent: z.string(),
+    isSpouseInGrace: z.string(),
+    spouseChurchAttendance: z.string(),
     spouseDenomination: z.string(),
-    engagedButLivingTogether: z.boolean(),
-    marriedTraditionally: z.boolean(),
-    marriedInCourt: z.boolean(),
-    marriedInChurch: z.boolean(),
+    engagedButLivingTogether: z.string(),
+    marriedTraditionally: z.string(),
+    marriedInCourt: z.string(),
+    marriedInChurch: z.string(),
     churchName: z.string(),
     marriageDate: z.date(),
 
@@ -119,31 +128,21 @@ const formSchema = z
     previousDenomination3PositionHeld: z.string(),
     previousDenomination3MinisterialOffice: z.string(),
     familyChurch: z.string(),
-    baptizedInWater: z.boolean(),
+    baptizedInWater: z.string(),
     baptizedInWaterWhenWhere: z.string(),
-    baptizedInHolySpirit: z.boolean(),
+    baptizedInHolySpirit: z.string(),
     baptizedInHolySpiritWhenWhere: z.string(),
     passion: z.string(),
     expectedChurchFamily: z.string(),
     specialSkills: z.string(),
   })
-  .refine(
-    (data) => {
-      const dob = new Date(data.dob);
-      const today = new Date();
-      const age = today.getFullYear() - dob.getFullYear();
-      return age >= 21;
-    },
-    {
-      message: "Age must be 21 or older",
-      path: ["dob"],
-    }
-  );
-
-const MultiForm = () => {
+  
+  const MultiForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [previousStep, setPreviousStep] = useState(0);
   const delta = currentStep - previousStep;
+  const [addMember, { data, error, isLoading }] = useAddMemberMutation();
+  const router = useRouter()
 
   const steps = [
     {
@@ -247,13 +246,13 @@ const MultiForm = () => {
   type FieldName = keyof Inputs;
 
   const next = async () => {
-    // const fields = steps[currentStep].fields;
+    const fields = steps[currentStep].fields;
 
-    // const isValid = await form.trigger(fields as FieldName[], {
-    //   shouldFocus: true,
-    // });
+    const isValid = await form.trigger(fields as FieldName[], {
+      shouldFocus: true,
+    });
 
-    // if (!isValid) return; // If validation fails, don't proceed to next step
+    if (!isValid) return; // If validation fails, don't proceed to next step
 
     // Validation succeeded, proceed to next step
     if (currentStep < steps.length - 1) {
@@ -307,14 +306,14 @@ const MultiForm = () => {
       lengthOfMarriage: "",
       numberOfChildren: "",
       numberOfGraceChildren: "",
-      isSingleParent: false,
-      isSpouseInGrace: false,
-      spouseChurchAttendance: false,
+      isSingleParent: "",
+      isSpouseInGrace: "",
+      spouseChurchAttendance: "",
       spouseDenomination: "",
-      engagedButLivingTogether: false,
-      marriedTraditionally: false,
-      marriedInCourt: false,
-      marriedInChurch: false,
+      engagedButLivingTogether: "",
+      marriedTraditionally: "",
+      marriedInCourt: "",
+      marriedInChurch: "",
       churchName: "",
       // marriageDate: "",
 
@@ -328,7 +327,7 @@ const MultiForm = () => {
       officeAddress: "",
 
       // prev denom
-   
+
       previousDenomination1: "",
       // previousDenomination1From: "",
       // previousDenomination1To: "",
@@ -345,9 +344,9 @@ const MultiForm = () => {
       previousDenomination3PositionHeld: "",
       previousDenomination3MinisterialOffice: "",
       familyChurch: "",
-      baptizedInWater: false,
+      baptizedInWater: "",
       baptizedInWaterWhenWhere: "",
-      baptizedInHolySpirit: false,
+      baptizedInHolySpirit: "",
       baptizedInHolySpiritWhenWhere: "",
       passion: "",
       expectedChurchFamily: "",
@@ -355,9 +354,96 @@ const MultiForm = () => {
     },
   });
 
-  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log('clicked')
+  const handleSubmit = async (
+    values: z.infer<typeof formSchema>
+  ) => {
+    console.log("clicked");
     console.log({ values });
+
+    let testValues = {
+      surname: "Okoro",
+      othernames: "Chinedu Obinna",
+      gender: "Male",
+      dob: "1990-01-01T00:00:00.000Z",
+      nationality: "Nigerian",
+      stateOfOrigin: "Imo",
+      lga: "Owerri North",
+      residentialAddress: "No 12, Okoro Street, Owerri",
+      landmark: "Near the city stadium",
+      phoneNumbers: "08012345678, 09023456789",
+      whatsappNumber: "08012345678",
+      email: "okoro.chinedu@gmail.com",
+      nextOfKinName: "Okoro Chima",
+      nextOfKinPhoneNumbers: "08098765432, 09087654321",
+      maritalStatus: "Married",
+      spouseName: "Okoro Nneoma",
+      maidenName: "Nneoma Onwuka",
+      spousePhoneNumber: "08076543210",
+      spouseEmail: "okoro.nneoma@gmail.com",
+      marriageAnniversary: "2020-06-12T00:00:00.000Z",
+      spouseBirthday: "1992-03-15T00:00:00.000Z",
+      spouseNationality: "Nigerian",
+      spouseStateOfOrigin: "Anambra",
+      spouseLGA: "Awka North",
+      hometown: "Owerri",
+      spouseOccupation: "Teacher",
+      spousePositionHeld: "Class Teacher",
+      spouseOfficeAddress: "No 1, School Road, Owerri",
+      otherRelevantInfo: "Member of the school's PTA",
+      lengthOfMarriage: "2 years",
+      numberOfChildren: "1",
+      numberOfGraceChildren: "0",
+      isSingleParent: "No",
+      isSpouseInGrace: "Yes",
+      spouseChurchAttendance: "Regular",
+      spouseDenomination: "Catholic",
+      engagedButLivingTogether: "No",
+      marriedTraditionally: "Yes",
+      marriedInCourt: "Yes",
+      marriedInChurch: "Yes",
+      churchName: "St. Mary's Catholic Church",
+      marriageDate: "2020-06-12T00:00:00.000Z",
+      highestAcademicQualification: "BSc",
+      discipline: "Computer Science",
+      occupation: "Software Engineer",
+      specifyOccupation: "Backend Developer",
+      positionHeld: "Team Lead",
+      officeAddress: "No 1, Tech Road, Lagos",
+      previousDenomination1: "Anglican",
+      previousDenomination1From: "2015-01-01T00:00:00.000Z",
+      previousDenomination1To: "2018-12-31T00:00:00.000Z",
+      previousDenomination1PositionHeld: "Youth Leader",
+      previousDenomination1MinisterialOffice: "Sunday School Teacher",
+      previousDenomination2: "Pentecostal",
+      previousDenomination2From: "2019-01-01T00:00:00.000Z",
+      previousDenomination2To: "2020-06-11T00:00:00.000Z",
+      previousDenomination2PositionHeld: "Worship Leader",
+      previousDenomination2MinisterialOffice: "Assistant Pastor",
+      previousDenomination3: "Catholic",
+      previousDenomination3From: "2020-06-12T00:00:00.000Z",
+      previousDenomination3To: "Present",
+      previousDenomination3PositionHeld: "Choir Member",
+      previousDenomination3MinisterialOffice: "Lector",
+      familyChurch: "St. Mary's Catholic Church",
+      baptizedInWater: "Yes",
+      baptizedInWaterWhenWhere: "2015, St. Mary's Catholic Church",
+      baptizedInHolySpirit: "Yes",
+      baptizedInHolySpiritWhenWhere: "2018, St. Mary's Catholic Church",
+      passion: "Singing and playing the guitar",
+      expectedChurchFamily: "A loving and supportive community",
+      specialSkills: "Playing the piano and singing",
+    };
+
+    try {
+      await addMember({
+        newMember: values,
+        // dob: format(values.dob, "yyyy-MM-dd"),
+      })
+      console.log(data)
+      router.push("/dashboard/members")
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -376,7 +462,8 @@ const MultiForm = () => {
               ) : currentStep === index ? (
                 <div
                   className="flex w-full flex-col border-l-4 border-sky-600 py-2 pl-4 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4"
-                  aria-current="step">
+                  aria-current="step"
+                >
                   <span className="text-sm font-medium text-sky-600">
                     {step.id}
                   </span>
@@ -401,11 +488,16 @@ const MultiForm = () => {
             {currentStep === 0 && <PersonalInfo delta={delta} form={form} />}
             {currentStep === 1 && <FamilyInfo delta={delta} form={form} />}
             {currentStep === 2 && <Career delta={delta} form={form} />}
-            {currentStep === 3 && <PrevDenom submit = {handleSubmit} delta={delta} form={form} />}
-           
+            {currentStep === 3 && (
+              <PrevDenom submit={handleSubmit} delta={delta} form={form} />
+            )}
+
+            {/* <Button type="submit">Submit</Button> */}
           </form>
         </Form>
       </div>
+
+      {/* <Button onClick={() => handleSubmit()}>Test</Button> */}
 
       {/* Navigation */}
       <div className="mt-8 pt-5">
@@ -414,14 +506,16 @@ const MultiForm = () => {
             type="button"
             onClick={prev}
             disabled={currentStep === 0}
-            className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50">
+            className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="h-6 w-6">
+              className="h-6 w-6"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -433,14 +527,16 @@ const MultiForm = () => {
             type="button"
             onClick={next}
             disabled={currentStep === steps.length - 1}
-            className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50">
+            className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset ring-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="h-6 w-6">
+              className="h-6 w-6"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
